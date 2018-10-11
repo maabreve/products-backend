@@ -4,6 +4,9 @@ import DataBase from './config/database';
 import mongoose = require("mongoose");
 import { ProductRouter } from './routes/product.router';
 import morgan = require('morgan');
+
+var compression = require('compression');
+var helmet = require('helmet');
 var cors = require('cors')
 
 class App {
@@ -23,12 +26,14 @@ class App {
     }
 
     middleware() {
+        this.app.use(helmet());
+        this.app.use(compression());
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(cors());
         //don't show the log when it is test
-        if(process.env.ProcessEnv !== "test") {
-            this.app.use(morgan('combined')); 
+        if (process.env.ProcessEnv !== "test") {
+            this.app.use(morgan('combined'));
         }
     }
 
@@ -40,7 +45,7 @@ class App {
                 message: 'Hello World!'
             });
         });
-        
+
         this.app.use('/', router);
 
         let productRouter = new ProductRouter(this.app);

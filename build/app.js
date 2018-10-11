@@ -16,6 +16,8 @@ var database_1 = __importDefault(require("./config/database"));
 var mongoose = require("mongoose");
 var product_router_1 = require("./routes/product.router");
 var morgan = require("morgan");
+var compression = require('compression');
+var helmet = require('helmet');
 var cors = require('cors');
 var App = /** @class */ (function () {
     function App() {
@@ -28,6 +30,8 @@ var App = /** @class */ (function () {
         this.database.closeConnection(message, function () { return callback(); });
     };
     App.prototype.middleware = function () {
+        this.app.use(helmet());
+        this.app.use(compression());
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(cors());
