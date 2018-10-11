@@ -1,6 +1,9 @@
 {
   "name": "ads",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.11.0"
+  },
   "description": "An app for ads management",
   "main": "index.js",
   "scripts": {
